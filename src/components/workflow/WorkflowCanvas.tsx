@@ -5,7 +5,7 @@ import ReactFlow, {
   Background,
   Controls,
   MiniMap,
-  type BackgroundVariant,
+  BackgroundVariant, // Corrected: Keep as value import if used as value, or remove if only type was intended
 } from 'reactflow';
 import type { AppNode, AppEdge } from '@/lib/types';
 import { NodeComponent } from './NodeComponent'; // Default custom node
