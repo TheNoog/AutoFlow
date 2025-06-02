@@ -1,4 +1,4 @@
-import type { AvailableNode } from './types';
+import type { AvailableNode, Workflow, AppEdge } from './types'; // Updated to include AppEdge
 import { Play, Terminal, Send, Settings2, MessageCircle, HelpCircle, Filter, Shuffle, GitFork } from 'lucide-react';
 
 export const AVAILABLE_NODES: AvailableNode[] = [
@@ -65,7 +65,7 @@ export const AVAILABLE_NODES: AvailableNode[] = [
     type: 'logic:conditional',
     name: 'Conditional Logic',
     description: 'Routes data based on a condition.',
-    icon: HelpCircle, // GitFork might be better but HelpCircle is fine.
+    icon: HelpCircle,
     defaultData: { condition: 'data.value > 10' },
      configFields: [
       { id: 'condition', label: 'Condition (e.g., data.value > 10)', type: 'string', placeholder: 'data.value > 10' },
@@ -92,7 +92,7 @@ export const AVAILABLE_NODES: AvailableNode[] = [
     type: 'transform:mapData',
     name: 'Map Data',
     description: 'Transforms each item in an array.',
-    icon: Shuffle, // Using Shuffle as a placeholder for map/transform
+    icon: Shuffle,
     defaultData: { mapLogic: '{...item, newValue: item.oldValue * 2}' },
      configFields: [
       { id: 'mapLogic', label: 'Mapping Logic (e.g., { ...item, newField: item.oldField })', type: 'string', placeholder: '{...item, newValue: item.oldValue * 2}' },
@@ -102,13 +102,20 @@ export const AVAILABLE_NODES: AvailableNode[] = [
   },
 ];
 
+const initialNodes = [
+  { id: 'node_1', type: 'trigger:manual', name: 'Start Workflow', position: { x: 50, y: 100 }, data: {} },
+  { id: 'node_2', type: 'action:log', name: 'Log Output', position: { x: 300, y: 100 }, data: { message: "Workflow started successfully!" } },
+];
+
+const initialEdges: AppEdge[] = [
+  // Example: { id: 'e1-2', source: 'node_1', target: 'node_2', sourceHandle: 'output', targetHandle: 'input' }
+];
+
+
 export const DEFAULT_WORKFLOW: Workflow = {
   id: 'default-workflow',
   name: 'My First Workflow',
-  nodes: [
-    { id: '1', type: 'trigger:manual', name: 'Start', position: { x: 50, y: 50 }, data: {} },
-    { id: '2', type: 'action:log', name: 'Log Output', position: { x: 250, y: 50 }, data: { message: "Workflow started!" } },
-  ],
-  connections: [],
+  nodes: initialNodes,
+  connections: initialEdges, // Changed from `connections: []` to `initialEdges`
   lastModified: new Date().toISOString(),
 };
